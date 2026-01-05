@@ -7,10 +7,12 @@ from sklearn.metrics import mean_absolute_error, r2_score
 import os
 
 # --- 1. Define Paths to Saved Assets ---
-# Path to the trained model
-MODEL_PATH = os.path.join('..', 'models', 'random_forest_model.joblib')
-# Path to the saved list of all feature columns
-FEATURE_LIST_PATH = os.path.join('..', 'models', 'full_feature_list.joblib') 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.abspath(os.path.join(BASE_DIR, ".."))
+
+MODEL_PATH = os.path.join(PROJECT_ROOT, "models", "random_forest_model.joblib")
+FEATURE_LIST_PATH = os.path.join(PROJECT_ROOT, "models", "full_feature_list.joblib")
+ 
 
 try:
     # Load the trained model (The Brain)
@@ -50,9 +52,14 @@ except Exception as e:
     MAE_SCORE = 0.0
 
 
-# --- 2. Initialize Flask App ---
-app = Flask(__name__)
-app.template_folder = os.path.join(os.path.dirname(__file__), 'templates')
+
+
+app = Flask(
+    __name__,
+    template_folder=os.path.join(BASE_DIR, "templates"),
+    static_folder=os.path.join(BASE_DIR, "static")
+)
+
 
 
 # --- 3. Home / Prediction Route ('/') ---
