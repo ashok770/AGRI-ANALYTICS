@@ -1,65 +1,38 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}Dashboard{% endblock %} {% block
+content %}
+<div class="dashboard-container">
+  <h1>Model Analytics Dashboard</h1>
 
-{% block title %}Model Dashboard{% endblock %}
-
-{% block content %}
-    <div class="dashboard-container">
-        <h1>Model Analytics Dashboard</h1>
-        <p class="subtitle">Proof of Concept: Analysis of the Random Forest Regressor Model Performance and Key Insights.</p>
-
-        <div class="metrics-grid">
-            <div class="metric-card performance-card">
-                <h2>Model Accuracy (R²)</h2>
-                <p class="metric-value" style="color:#008000;">{{ r2_score | round(4) }}</p>
-                <p class="metric-label">Explains variance (Closer to 1.0 is better)</p>
-            </div>
-            <div class="metric-card performance-card">
-                <h2>Mean Absolute Error (MAE)</h2>
-                <p class="metric-value" style="color:#FF8C00;">{{ mae_score | round(2) }} hg/ha</p>
-                <p class="metric-label">Average prediction error</p>
-            </div>
-        </div>
-
-        <div class="section-title">
-            <h2>Feature Importance (The 'WHY')</h2>
-            <p>These factors had the biggest influence on yield prediction, ranked by importance score.</p>
-        </div>
-
-        <div class="feature-table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>Feature / Factor</th>
-                        <th>Importance Score</th>
-                        <th>Insight</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for feature_data in features %}
-                    <tr>
-                        <td>{{ loop.index }}</td>
-                        <td>{{ feature_data.feature | replace('_', ' ') | title }}</td>
-                        <td><span class="score-badge">{{ feature_data.score | round(4) }}</span></td>
-                        <td>
-                            {% if loop.index == 1 %}
-                                <span class="insight-text">Primary driver of high yield.</span>
-                            {% elif loop.index == 2 %}
-                                <span class="insight-text">Most influential *management* factor.</span>
-                            {% else %}
-                                <span class="insight-text">Critical environmental factor.</span>
-                            {% endif %}
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        
-        <div class="section-title">
-            <h2>Model Fit Visualization</h2>
-            <p>Placeholder for the Actual vs. Predicted Scatter Plot (Requires complex libraries like Plotly/Bokeh for live web charts).</p>
-        </div>
-
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <h2>R² Score</h2>
+      <p>{{ r2_score }}</p>
     </div>
+    <div class="metric-card">
+      <h2>MAE</h2>
+      <p>{{ mae_score }} hg/ha</p>
+    </div>
+  </div>
+
+  <h2>Feature Importance</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Feature</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for f in features %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ f.feature }}</td>
+        <td>{{ f.score }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}
