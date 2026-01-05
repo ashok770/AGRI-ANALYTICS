@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Methodology & Project Goal{% endblock %}
+
+{% block content %}
+    <div class="about-container">
+        <h1>Project Methodology & Goal</h1>
+        <p class="subtitle">This application provides an accurate and transparent forecast of crop yields to help farmers and agribusinesses make better resource decisions.</p>
+
+        <div class="section-card">
+            <h2>The Problem: The "Black Box" Gap</h2>
+            <p>Traditional machine learning models predict outcomes but fail to explain **why** they reached that conclusion. In agriculture, a farmer needs to know if low yield is due to fertilizer or low rainfall to take corrective action.</p>
+            <p>Our goal was to solve this **Explainability Gap** by building an analytical application that delivers both a prediction and its root cause analysis.</p>
+        </div>
+
+        <div class="section-card">
+            <h2>The Solution: An Explainable ML Pipeline</h2>
+            <div class="methodology-details">
+                <div class="detail-box">
+                    <h3>1. Data Sources</h3>
+                    <p>The model was trained on a large historical dataset combining global records for: **Annual Rainfall, Average Temperature, Pesticides Application,** Crop Type, and Location (Area).</p>
+                </div>
+                <div class="detail-box">
+                    <h3>2. Core Model</h3>
+                    <p>We used the **Random Forest Regressor** model. This is an ensemble method highly effective at capturing complex, non-linear relationships between weather/soil factors and crop yield.</p>
+                </div>
+                <div class="detail-box">
+                    <h3>3. Performance</h3>
+                    <p>The model achieved an **R² Score of ~0.9875**, meaning it explains over 98% of the variability in crop yield. This demonstrates high predictive accuracy.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2>Key Analytical Insight (The 'WHY')</h2>
+            <p>Our **Feature Importance** analysis revealed the top global factors driving yield prediction:</p>
+            <ul>
+                <li>**#1:** Crop Type (e.g., Potatoes)</li>
+                <li>**#2:** Pesticide Tonnes Applied</li>
+                <li>**#3:** Average Temperature</li>
+            </ul>
+            <p>By highlighting these factors, the app turns a simple prediction into **actionable advice** for resource allocation.</p>
+        </div>
+    </div>
+{% endblock %}

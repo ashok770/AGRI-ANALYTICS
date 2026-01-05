@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Crop Yield Predictor{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">
+            🌾 **AGRI-ANALYTICS**
+        </div>
+        <nav class="main-nav">
+            <a href="{{ url_for('home') }}" class="nav-link">Home (Predict)</a>
+            <a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard (Analysis)</a>
+            <a href="{{ url_for('whatif') }}" class="nav-link">What-If Scenarios</a>
+            <a href="{{ url_for('about') }}" class="nav-link">Methodology</a>
+        </nav>
+    </header>
+
+    <main class="content-container">
+        {% block content %}{% endblock %}
+    </main>
+    
+    <footer class="main-footer">
+        <p>&copy; 2025 Agri-Analytics. Solving the Explainability Gap.</p>
+    </footer>
+</body>
+</html>

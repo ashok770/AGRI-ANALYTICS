@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}What-If Scenarios{% endblock %}
+
+{% block content %}
+    <div class="scenario-container">
+        <h1>What-If Scenario Planner</h1>
+        <p class="subtitle">Test how changing a single variable (like fertilizer or temperature) affects your final predicted yield.</p>
+
+        <form method="POST" action="/what-if" class="prediction-form">
+            <div class="form-group-grid">
+                <div class="form-group">
+                    <label for="item">1. Crop (Constant):</label>
+                    <select id="item" name="Item" required>
+                        <option value="Potatoes">Potatoes</option>
+                        <option value="Rice, paddy">Rice, paddy</option>
+                        <option value="Maize">Maize</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="area">2. Area (Constant):</label>
+                    <input type="text" id="area" name="Area" placeholder="e.g., India" value="India" required>
+                </div>
+                <div class="form-group">
+                    <label for="year">3. Year (Constant):</label>
+                    <input type="text" id="year" name="Year" placeholder="e.g., 2024" value="2024" required>
+                </div>
+            </div>
+
+            <h2 style="color: #4CAF50; margin-top: 30px;">Select Scenario Variable (Variable Factor)</h2>
+            <p style="color: #555;">Choose the factor you want to vary and the range to test.</p>
+            
+            <div class="form-group-grid">
+                <div class="form-group">
+                    <label for="variable_factor">Variable Factor:</label>
+                    <select id="variable_factor" name="variable_factor" required>
+                        <option value="pesticides_tonnes">Pesticides Tonnes (Top Factor)</option>
+                        <option value="avg_temp">Average Temperature (°C)</option>
+                        <option value="average_rain_fall_mm_per_year">Average Rainfall (mm/year)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="start_value">Start Value:</label>
+                    <input type="text" id="start_value" name="start_value" placeholder="e.g., 500" required>
+                </div>
+                <div class="form-group">
+                    <label for="end_value">End Value:</label>
+                    <input type="text" id="end_value" name="end_value" placeholder="e.g., 5000" required>
+                </div>
+                <div class="form-group">
+                    <label for="steps">Number of Steps:</label>
+                    <input type="text" id="steps" name="steps" placeholder="e.g., 10" value="10" required>
+                </div>
+            </div>
+
+            <button type="submit" class="predict-btn">Generate Scenario Analysis</button>
+        </form>
+
+        {% if scenario_results %}
+        <div class="result-card" style="margin-top: 40px;">
+            <h2 class="result-title">Scenario Results: {{ variable_factor | replace('_', ' ') | title }} Impact</h2>
+            <div class="feature-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>{{ variable_factor | replace('_', ' ') | title }}</th>
+                            <th>Predicted Yield (hg/ha)</th>
+                            <th>Change from Start (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in scenario_results %}
+                        <tr>
+                            <td>{{ row.factor_value }}</td>
+                            <td>{{ row.predicted_yield }}</td>
+                            <td style="color: {% if row.change_percent > 0 %}green{% elif row.change_percent < 0 %}red{% else %}black{% endif %};">{{ row.change_percent | round(2) }}%</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <p style="margin-top: 20px;">Use this data to optimize resource spending and maximize profit.</p>
+        </div>
+        {% endif %}
+
+    </div>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Predict Crop Yield{% endblock %}
+
+{% block content %}
+    <div class="prediction-container">
+        <h1>Predict Crop Yield (hg/ha)</h1>
+        <p class="subtitle">Enter your farm and management parameters below to get an instant, explained yield forecast.</p>
+        
+        <form method="POST" action="/" class="prediction-form">
+            <div class="form-group">
+                <label for="item">1. Crop Type (Item):</label>
+                <select id="item" name="Item" required>
+                    <option value="Potatoes">Potatoes (High Yield Potential)</option>
+                    <option value="Rice, paddy">Rice, paddy</option>
+                    <option value="Maize">Maize</option>
+                    <option value="Wheat">Wheat</option>
+                    <option value="Sorghum">Sorghum</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="area">2. Area/Country (e.g., India):</label>
+                <input type="text" id="area" name="Area" placeholder="e.g., India" required>
+            </div>
+
+            <div class="form-group-grid">
+                <div class="form-group">
+                    <label for="pesticides_tonnes">3. Pesticides Tonnes Used:</label>
+                    <input type="text" id="pesticides_tonnes" name="pesticides_tonnes" placeholder="e.g., 2000.0" required>
+                </div>
+                <div class="form-group">
+                    <label for="avg_temp">4. Average Temperature (°C):</label>
+                    <input type="text" id="avg_temp" name="avg_temp" placeholder="e.g., 20.5" required>
+                </div>
+                <div class="form-group">
+                    <label for="avg_rain">5. Average Rainfall (mm/year):</label>
+                    <input type="text" id="avg_rain" name="average_rain_fall_mm_per_year" placeholder="e.g., 1500.0" required>
+                </div>
+                <div class="form-group">
+                    <label for="year">6. Year of Harvest:</label>
+                    <input type="text" id="year" name="Year" placeholder="e.g., 2024" required>
+                </div>
+            </div>
+
+            <button type="submit" class="predict-btn">Get Predicted Yield</button>
+        </form>
+
+        {% if prediction_text %}
+        <div class="result-card">
+            <h2 class="result-title">Predicted Yield: <span class="yield-value">{{ prediction_text }}</span></h2>
+            <div class="explanation-box">
+                <p class="explanation-text">{{ explanation_text }}</p>
+                <p class="confidence-text">Model Confidence (R²): ~98.7%</p>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+{% endblock %}
